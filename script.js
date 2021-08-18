@@ -1,73 +1,38 @@
 'use strict'
 
-const inputElem = document.createElement('input'),
-   headingElem = document.createElement('h1'),
-   buttonElem = document.createElement('button');
+const DomElement = function (selector = '.logo', height = '55px', width = '700px', bg = 'tomato', fontSize = '35px') {
 
-headingElem.innerText = 'Введите нужный вам селектор (класс или ID)';
-
-buttonElem.innerText = 'Ввод';
-buttonElem.style.padding = '10px';
-buttonElem.style.width = '100px';
-
-inputElem.style.margin = '10px 20px 30px 20px';
-inputElem.style.padding = '10px 25px';
-inputElem.style.width = '300px';
-
-document.body.append(headingElem);
-document.body.append(inputElem);
-document.body.append(buttonElem);
-
-
-const DomElement = function () {
-
-   this.selector = '';
-   this.height = '30px';
-   this.width = '700px';
-   this.bg = 'tomato';
-   this.fontSize = '28px';
+   this.selector = selector;
+   this.height = height;
+   this.width = width;
+   this.bg = bg;
+   this.fontSize = fontSize;
 
 };
 
 DomElement.prototype.createElement = function () {
 
+   let elemPage;
+
    if (this.selector.charAt(0) === '.') {
 
-      const divElem = document.createElement('div');
+      elemPage = document.createElement('div');
+      elemPage.className = this.selector.slice(1);
 
-      divElem.className = this.selector.slice(1);
-
-      divElem.style.height = this.height;
-      divElem.style.width = this.width;
-      divElem.style.backgroundColor = this.bg;
-      divElem.style.fontSize = this.fontSize;
-
-
-      divElem.innerHTML = `Вы создали <strong>div</strong> элемент с классом <strong>${this.selector}</strong>`;
-      document.body.append(divElem);
    } else if (this.selector.charAt(0) === '#') {
 
-      const pElem = document.createElement('p');
-
-      pElem.id = this.selector.slice(1);
-
-      pElem.style.height = this.height;
-      pElem.style.width = this.width;
-      pElem.style.backgroundColor = this.bg;
-      pElem.style.fontSize = this.fontSize;
-
-      pElem.innerHTML = `Вы создали <strong>p</strong> элемент с id <strong>${this.selector}</strong>`;
-      document.body.append(pElem);
-   } else {
-      alert('Введите селектор корректно!');
+      elemPage = document.createElement('p');
+      elemPage.id = this.selector.slice(1);
    }
+
+   elemPage.style.height = this.height;
+   elemPage.style.width = this.width;
+   elemPage.style.backgroundColor = this.bg;
+   elemPage.style.fontSize = this.fontSize;
+   elemPage.innerHTML = `Вы создали элемент с <strong>${this.selector}</strong>`;
+   document.body.append(elemPage);
 
 };
 
-const domElement = new DomElement();
-
-
-buttonElem.addEventListener('click', function () {
-   domElement.selector = inputElem.value;
-   domElement.createElement();
-});
+const domElement = new DomElement('#footer', '125px', '850px', 'red', '55px');
+domElement.createElement();
